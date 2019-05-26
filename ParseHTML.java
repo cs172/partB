@@ -7,6 +7,8 @@ import org.jsoup.nodes.Element;
 
 public class ParseHTML
 {
+    // Requires error checking but it is a low priority at the moment.
+    // All files passed will be html files obtained from our java crawler
     Document htmlDocument;
 
     public ParseHTML(File htmlFile)
