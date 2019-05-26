@@ -7,7 +7,10 @@ public class ParseHTML_TestBench
 {
     public static void main(String[] args)
     {
-        File htmlFile = new File("/home/rblaz001/Documents/cs172project/project/storage/484453108.html");
+
+        final String filePath = "/home/rblaz001/Documents/cs172project/project/storage/484453108.html";
+
+        File htmlFile = new File(filePath);
 
         ParseHTML htmlParser = new ParseHTML(htmlFile);
 
