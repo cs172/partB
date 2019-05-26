@@ -1,6 +1,8 @@
 package edu.ucr.cs172.project.partB;
 
 import java.io.File;
+import java.io.IOException;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -13,12 +15,16 @@ public class ParseHTML
 
     public ParseHTML(File htmlFile)
     {
-        htmlDocument = Jsoup.parse(htmlFile, "UTF-8", "");
+        updateFile(htmlFile);
     }
 
     public void updateFile(File htmlFile)
     {
-        htmlDocument = Jsoup.parse(htmlFile, "UTF-8", "");
+        try
+        {
+            htmlDocument = Jsoup.parse(htmlFile, "UTF-8", "");
+        }
+        catch(IOException e){ e.printStackTrace(); }
     }
 
     public String title()
