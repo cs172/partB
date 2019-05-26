@@ -13,6 +13,11 @@ public class ParseHTML
     // All files passed will be html files obtained from our java crawler
     Document htmlDocument;
 
+    public ParseHTML()
+    {
+        htmlDocument = new Document("");
+    }
+
     public ParseHTML(File htmlFile)
     {
         updateFile(htmlFile);
