@@ -20,7 +20,7 @@ import org.apache.lucene.util.Version;
 public class Indexer {
 
    private IndexWriter writer;
-
+   private Directory indexDirectory;
    private ParseHTML htmlParser;
 
    public Indexer(String indexDirectoryPath) throws IOException 
@@ -29,21 +29,23 @@ public class Indexer {
       Analyzer analyzer = new StandardAnalyzer();
 
       //this directory will contain the indexes
-      Directory indexDirectory = 
-         FSDirectory.open(new File(indexDirectoryPath).toPath());
+      indexDirectory = FSDirectory.open(new File(indexDirectoryPath).toPath());
 
       //create the indexer
       IndexWriterConfig config = new IndexWriterConfig(analyzer);
       writer = new IndexWriter(indexDirectory, config);
    }
 
-   public void close() throws CorruptIndexException, IOException {
+   public void close() throws CorruptIndexException, IOException 
+   {
+      indexDirectory.close();
       writer.close();
    }
 
-   private void indexFile(File file) throws IOException {
+   private void indexFile(File file) throws IOException 
+   {
       // The Print statement should be removed after debugging
-      System.out.println("Indexing "+file.getCanonicalPath());
+      //System.out.println("Indexing "+file.getCanonicalPath());
       Document document = new Document();
       htmlParser.updateFile(file);
 
