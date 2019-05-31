@@ -38,14 +38,14 @@ public class Indexer {
 
    public void close() throws CorruptIndexException, IOException 
    {
-      indexDirectory.close();
       writer.close();
+      indexDirectory.close();
    }
 
    private void indexFile(File file) throws IOException 
    {
       // The Print statement should be removed after debugging
-      //System.out.println("Indexing "+file.getCanonicalPath());
+      System.out.println("Indexing "+file.getCanonicalPath());
       Document document = new Document();
       htmlParser.updateFile(file);
 
