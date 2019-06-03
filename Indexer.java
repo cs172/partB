@@ -10,6 +10,7 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.TextField;
+import org.apache.lucene.document.StringField;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
@@ -51,6 +52,7 @@ public class Indexer {
 
       document.add(new TextField("title", htmlParser.title(), Field.Store.YES));
       document.add(new TextField("content", htmlParser.body(), Field.Store.YES));
+      document.add(new StringField("file_path", file.getCanonicalPath(), Field.Store.YES));
       writer.addDocument(document);
    }
 
