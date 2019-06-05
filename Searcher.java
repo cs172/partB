@@ -7,9 +7,12 @@ import java.io.IOException;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
@@ -22,7 +25,11 @@ import org.apache.lucene.store.FSDirectory;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.AbstractMap;
 import java.util.List;
+import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
@@ -65,13 +72,8 @@ public class Searcher
    public List<Document> search(String queryString, int numberOfTopResults) throws IOException, ParseException
    {
       Query query = parser.parse(queryString);
-      
-      queryTerms = new ArrayList<String>();
-      StringTokenizer stringTokenizer = new StringTokenizer(query.toString());
-      while(stringTokenizer.hasMoreTokens())
-      {
-         queryTerms.add(stringTokenizer.nextToken());
-      }
+
+      analyze(queryString);
 
       ScoreDoc[] hits = indexSearcher.search(query, numberOfTopResults).scoreDocs;
 
@@ -86,9 +88,55 @@ public class Searcher
       return rankedDocuments;
    }
 
+   public void analyze(String text) throws IOException{
+      queryTerms = new ArrayList<String>();
+      TokenStream tokenStream = analyzer.tokenStream("query", text);
+      CharTermAttribute attr = tokenStream.addAttribute(CharTermAttribute.class);
+      tokenStream.reset();
+      while(tokenStream.incrementToken()) 
+      {
+         queryTerms.add(attr.toString());
+      }        
+   }
+
    public List<String> getQueryTermList()
    {
       return queryTerms;
+   }
+
+   public Map.Entry<Integer,Integer> getSnipetMap(int rank)
+   {
+      for(int i = 0; i < queryTerms.size(); i++)
+      {
+         int start = 0;
+         int end = 0;
+         int startingIndex = rankedDocuments.get(rank).get("content").toLowerCase().indexOf(queryTerms.get(i));
+
+         if(startingIndex != -1)
+         {
+            if(startingIndex > 179)
+            {
+               start = startingIndex - 180;
+            }
+            else
+            {
+               start = 0;
+            }
+
+            if( (startingIndex + 180) < rankedDocuments.get(rank).get("content").length())
+            {
+               end = startingIndex + 180;
+            }
+            else
+            {
+               end = rankedDocuments.get(rank).get("content").length() - 1;
+            }
+
+            return new AbstractMap.SimpleEntry<Integer,Integer>(start, end);
+         }
+      }
+
+      return new AbstractMap.SimpleEntry<Integer,Integer>(0,0);
    }
 
    public void close() throws IOException
