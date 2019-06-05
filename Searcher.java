@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 public class Searcher 
 {
@@ -37,6 +38,9 @@ public class Searcher
 
    private Map<String,Float> scoreWeights;
    private final String[] FIELDS = {"title", "content"};
+
+   private List<Document> rankedDocuments;
+   private List<String> queryTerms;
 
    // Paramater 1: String - File path to directory of indexes
    // Parameter 2: float - weight for results found in the title of the document
@@ -61,9 +65,17 @@ public class Searcher
    public List<Document> search(String queryString, int numberOfTopResults) throws IOException, ParseException
    {
       Query query = parser.parse(queryString);
+      
+      queryTerms = new ArrayList<String>();
+      StringTokenizer stringTokenizer = new StringTokenizer(query.toString());
+      while(stringTokenizer.hasMoreTokens())
+      {
+         queryTerms.add(stringTokenizer.nextToken());
+      }
+
       ScoreDoc[] hits = indexSearcher.search(query, numberOfTopResults).scoreDocs;
 
-      List<Document> rankedDocuments = new ArrayList<Document>();
+      rankedDocuments = new ArrayList<Document>();
 
       for (int rank = 0; rank < hits.length; ++rank) {
          Document hitDoc = indexSearcher.doc(hits[rank].doc);
@@ -72,6 +84,11 @@ public class Searcher
       }
 
       return rankedDocuments;
+   }
+
+   public List<String> getQueryTermList()
+   {
+      return queryTerms;
    }
 
    public void close() throws IOException

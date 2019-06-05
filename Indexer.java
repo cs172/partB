@@ -9,6 +9,7 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+//import org.apache.lucene.document.FieldType;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.document.StringField;
 import org.apache.lucene.index.CorruptIndexException;
@@ -50,13 +51,19 @@ public class Indexer {
       Document document = new Document();
       htmlParser.updateFile(file);
 
+      /*
+      FieldType bodyType = new FieldType(TextField.TYPE_STORED);
+      bodyType.setStoreTermVectors(true);
+      bodyType.setStoreTermVectorPositions(true);
+      */
+
       document.add(new TextField("title", htmlParser.title(), Field.Store.YES));
       document.add(new TextField("content", htmlParser.body(), Field.Store.YES));
       document.add(new StringField("file_path", file.getCanonicalPath(), Field.Store.YES));
       writer.addDocument(document);
    }
 
-   public void createIndex(String dataDirPath) 
+   public void createIndex(String dataDirPath)
       throws IOException {
       //get all files in the data directory
       File[] files = new File(dataDirPath).listFiles();

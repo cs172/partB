@@ -14,10 +14,13 @@ public class Searcher_TestBench
         {
             Searcher searcher = new Searcher("../indexes/", 1.5f, 1.0f);
 
-            List<Document> documents = searcher.search("president", 10);
+            List<Document> documents = searcher.search(args[0], 10);
 
             for (int rank = 0; rank < documents.size(); ++rank) {
-                System.out.println((rank + 1) + documents.get(rank).get("title") + " - " + documents.get(rank).get("content"));
+                System.out.println("Document Ranked:  " + (rank + 1) + " - " 
+                    + documents.get(rank).get("file_path")  + '\n' + '\n'
+                    + documents.get(rank).get("title") + '\n' + '\n' 
+                    + documents.get(rank).get("content") + '\n' + '\n');
             }
 
             searcher.close();
