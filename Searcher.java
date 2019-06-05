@@ -110,22 +110,36 @@ public class Searcher
       {
          int start = 0;
          int end = 0;
-         int startingIndex = rankedDocuments.get(rank).get("content").toLowerCase().indexOf(queryTerms.get(i));
+         int middleIndex = -1;
 
-         if(startingIndex != -1)
+         List<Integer> termIndexes = getTermIndexes(rank, i);
+
+         if(termIndexes.size() > 1)
          {
-            if(startingIndex > 179)
+            middleIndex = termIndexes.get(termIndexes.size() / 2);
+         }
+         else
+         {
+            if(termIndexes.size() == 1)
             {
-               start = startingIndex - 180;
+               middleIndex = termIndexes.get(1);
+            }
+         }
+
+         if(middleIndex != -1)
+         {
+            if(middleIndex > 179)
+            {
+               start = middleIndex - 180;
             }
             else
             {
                start = 0;
             }
 
-            if( (startingIndex + 180) < rankedDocuments.get(rank).get("content").length())
+            if( (middleIndex + 180) < rankedDocuments.get(rank).get("content").length())
             {
-               end = startingIndex + 180;
+               end = middleIndex + 180;
             }
             else
             {
@@ -143,6 +157,33 @@ public class Searcher
    {
       indexReader.close();
       indexDirectory.close();
+   }
+
+   private List<Integer> getTermIndexes(int rank, int queryTermIndex)
+   {
+      int lastIndex = 0;
+
+      List<Integer> termIndexes = new ArrayList<Integer>();
+
+      while(lastIndex != -1)
+      {
+         lastIndex = rankedDocuments.get(rank).get("content").toLowerCase().indexOf(queryTerms.get(queryTermIndex), lastIndex);
+
+         if(lastIndex != -1)
+         {
+            termIndexes.add(lastIndex);
+            if(lastIndex < (rankedDocuments.get(rank).get("content").length() - 1) )
+            {
+               lastIndex += 1;
+            }
+            else
+            {
+               lastIndex = -1;
+            }
+         }
+      }
+
+      return termIndexes;
    }
 
    /*
