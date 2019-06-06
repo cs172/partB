@@ -13,6 +13,11 @@ public class ParseHTML
     // All files passed will be html files obtained from our java crawler
     Document htmlDocument;
 
+    public ParseHTML()
+    {
+        htmlDocument = new Document("");
+    }
+
     public ParseHTML(File htmlFile)
     {
         updateFile(htmlFile);
@@ -29,11 +34,27 @@ public class ParseHTML
 
     public String title()
     {
-        return htmlDocument.body().text();
+        String temp = htmlDocument.title();
+
+        if(temp != null)
+        {
+            return temp;
+        }
+        else
+        {
+            return "";
+        }
     }
 
     public String body()
     {
-        return htmlDocument.body().text();
+        if(htmlDocument.body() != null)
+        {    
+            return htmlDocument.body().text();
+        }
+        else
+        {
+            return "";
+        }
     }
 }
