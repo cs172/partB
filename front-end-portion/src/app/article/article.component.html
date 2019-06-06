@@ -1,8 +1,7 @@
-<!-- Nhat Le - UCR -->
 
 <input #searchBox id="search-box"
 (keyup.enter)="search(searchBox.value)"/>
-<button (click)="search(searchBox.value)">Search</button>
+<button (click)="search(searchBox.value)">Press to Search!</button>
 
 <h2>Relevant Articles:</h2>
 <ul class="articles" *ngIf="articles">
