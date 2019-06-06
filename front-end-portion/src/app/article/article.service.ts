@@ -1,4 +1,3 @@
-// Nhat Le - UCR
 
 import { Injectable } from '@angular/core';
 import { Article } from './article';
