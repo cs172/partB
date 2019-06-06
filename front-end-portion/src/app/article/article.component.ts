@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { ArticleService } from './article.service';
 import { Article } from './article';
-import { Observable, Subject } from 'rxjs';
+//import { Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-article',
@@ -17,7 +17,7 @@ export class ArticleComponent implements OnInit {
 
   ngOnInit() {    
   }
-
+ 
   search(query: string) {
     this.lastSearch = query;
 
