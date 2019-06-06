@@ -11,6 +11,7 @@ import { Observable, Subject } from 'rxjs';
 })
 export class ArticleComponent implements OnInit {
   articles: Article[];
+  title='REJ Search'
   lastSearch: string;
 
   constructor(private articleService: ArticleService) { }
