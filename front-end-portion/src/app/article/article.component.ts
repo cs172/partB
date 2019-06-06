@@ -1,13 +1,15 @@
+import { Component, OnInit } from '@angular/core';
+
 import { ArticleService } from './article.service';
-import { Document } from './document';
+import { Article } from './article';
 import { Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-article',
-  templateUrl: './document.component.html',
-  styleUrls: ['./document.component.css']
+  templateUrl: './article.component.html',
+  styleUrls: ['./article.component.css']
 })
-export class DocumentComponent implements OnInit {
+export class ArticleComponent implements OnInit {
   articles: Article[];
   lastSearch: string;
 
