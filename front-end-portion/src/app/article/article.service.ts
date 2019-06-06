@@ -14,6 +14,7 @@ export class ArticleService {
   constructor(private http: HttpClient) { }
 
   getArticles(query: string):  Observable<Article[]> {
+    console.log(this.baseUrl + '/api/articles?query=' + query);
     return this.http.get<Article[]>(this.baseUrl + '/api/articles?query=' + query);
   }
 }
