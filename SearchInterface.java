@@ -15,10 +15,8 @@ public class SearchInterface
     private String documentPath;
     private List<RankedResult> rankedResults;
 
-    public SearchInterface(String query, int displayCount)
+    public static List<RankedResult> search(String query, int displayCount)
     {
-        rankedResults = new ArrayList<RankedResult>();
-
         try
         {
             Searcher searcher = new Searcher("../indexes/", 1.5f, 1.0f);
