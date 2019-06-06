@@ -9,14 +9,13 @@ import org.apache.lucene.queryparser.classic.ParseException;
 
 public class SearchInterface
 {
-    private int rank;
-    private String title;
-    private String snippet;
-    private String documentPath;
-    private List<RankedResult> rankedResults;
-
     public static List<RankedResult> search(String query, int displayCount)
     {
+        int rank;
+        String title;
+        String snippet;
+        String documentPath;
+        List<RankedResult> rankedResults;
         try
         {
             Searcher searcher = new Searcher("../indexes/", 1.5f, 1.0f);
@@ -31,7 +30,7 @@ public class SearchInterface
                 snippet = documents.get(i).get("content").substring(snipetIndexMap.getKey(), snipetIndexMap.getValue());
                 documentPath = documents.get(rank).get("file_path");
 
-                RankedResult result = new RankedResult(rank, title, sinppet, documentPath);
+                RankedResult result = new RankedResult(rank, title, snippet, documentPath);
                 rankedResults.add(result);
             }
 

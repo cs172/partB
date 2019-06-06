@@ -7,7 +7,7 @@ public class RankedResult
     private String snippet;
     private String documentPath;
 
-    public RankedResult(int rank, String title, String, snippet, String documentPath)
+    public RankedResult(int rank, String title, String snippet, String documentPath)
     {
         this.rank = rank;
         this.title = title;
