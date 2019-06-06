@@ -13,8 +13,9 @@ export class ArticleService {
 
   constructor(private http: HttpClient) { }
 
-  getArticles(query: string):  Observable<Article[]> {
-    console.log(this.baseUrl + '/api/articles?query=' + query);
-    return this.http.get<Article[]>(this.baseUrl + '/api/articles?query=' + query);
+  getArticles(query: string, displayCount: number):  Observable<Article[]> {
+    //displayCount=5;
+    console.log(this.baseUrl + '/api/articles?query=' + query + '&displayCount='+displayCount);
+    return this.http.get<Article[]>(this.baseUrl + '/api/articles?query=' + query + '&displayCount='+displayCount);
   }
 }

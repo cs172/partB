@@ -19,10 +19,10 @@ export class ArticleComponent implements OnInit {
   ngOnInit() {    
   }
 
-  search(query: string) {
+  search(query: string, displayCount: number) {
     this.lastSearch = query;
-
-    this.articleService.getArticles(query)
+    displayCount = 5;
+    this.articleService.getArticles(query, displayCount)
         .subscribe(articles => this.articles = articles);
   }
 }
