@@ -7,6 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class LuceneSearcherApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(LuceneSearcherApplication.class, args);
+		SpringApplication.run(LuceneSearcherApplication.class, args); 
 	}
 }

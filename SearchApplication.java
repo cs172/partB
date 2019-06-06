@@ -11,6 +11,6 @@ public class SearchApplication
     public static void main(String[] args) 
         throws IOException, ParseException
     {   
-        SpringApplication.run(SearcherApplication.class, args);
+        SpringApplication.run(SearchApplication.class, args);
     }
 }
